@@ -55,5 +55,11 @@ Rails.application.configure do
   # Don't overwrite Rspec files in generators
   config.generators do |g|
     g.test_framework nil
+
+  # Using the local settings for Active Storage
+  config.active_storage.service = :local
+
+  # Using the Amazon S3 settings for Active Storage
+  config.active_storage.service = :amazon
   end
 end

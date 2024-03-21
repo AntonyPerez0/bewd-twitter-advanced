@@ -13,6 +13,16 @@ class TweetsController < ApplicationController
     render 'tweets/create' if @tweet.save
   end
 
+  if @tweet.save
+
+    TweetMailer.notify(@tweet).deliver! # invoke TweetMailer to send out the email when a tweet is successfully posted
+
+    render 'tweets/create'
+
+  end
+
+end
+
   def destroy
     token = cookies.signed[:twitter_session_token]
     session = Session.find_by(token: token)
@@ -45,6 +55,6 @@ class TweetsController < ApplicationController
   private
 
   def tweet_params
-    params.require(:tweet).permit(:message)
+    params.require(:tweet).permit(:message, :image)
   end
 end
